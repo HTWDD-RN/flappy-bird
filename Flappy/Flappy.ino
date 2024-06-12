@@ -130,7 +130,7 @@ void shift(){
     score++;
     
     // Geschwindigkeitserhöhung der Balken
-    if((score%4)==0 && score < 7*4){
+    if((score%4)==0 && score < 9*4){
       timer2_interval -= 100;
     }
   }
