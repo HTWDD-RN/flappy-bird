@@ -34,7 +34,7 @@ void setup() {
   FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
   FastLED.setBrightness(  BRIGHTNESS );
   Timer1.initialize(TIMER);
-  Timer1.attachInterrupt(blinkLed);
+  Timer1.attachInterrupt(flap);
 
   // Setup Button
   button.attach(IN_PIN, INPUT_PULLUP);
@@ -91,7 +91,7 @@ void flyUp(){
   reverse = (digitalRead(IN_PIN) == HIGH);
 }
 
-void blinkLed(){
+void flap(){
   if(isGameOver){
     return;
   }
