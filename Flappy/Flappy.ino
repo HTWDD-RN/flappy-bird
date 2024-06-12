@@ -13,13 +13,18 @@
 #define LED_TYPE WS2812B
 #define COLOR_ORDER GRB
 #define TIMER 150000 // Timer: 0.15s
+#define MIN_BIRD_POSITION 16
+#define MAX_BIRD_POSITION 31
+#define STARTING_BIRD_POSITION 24
+#define DEFAULT_WORLD_SPEED 1000
 
 CRGB leds[NUM_LEDS];
 volatile int counter = 24; // Anfangsposition des Vogels
-volatile bool reverse = false;
-volatile bool isGameOver = true;
+volatile bool do_fly_up = false;
+volatile bool is_game_over = true;
 volatile int score;
-volatile int timer2_interval = 1000;
+volatile int timer2_interval = DEFAULT_WORLD_SPEED;
+volatile bool prevent_falling = false;
 const int rs = 8, en = 9, d4 = 4, d5 = 5, d6 = 6, d7 = 7;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
@@ -59,10 +64,9 @@ void loop() {
   lcd.print("SCORE: ");
   lcd.print(score);
 
-  if(isGameOver == false && millis() - previousMillis > timer2_interval){
+  if(is_game_over == false && millis() - previousMillis > timer2_interval){
     previousMillis = millis();
     shift();
-    // world.shift();
   }
 
   world.print(leds);
@@ -71,7 +75,7 @@ void loop() {
   if(leds[counter] != CRGB::Black){
     lcd.setCursor(0,1);
     lcd.print("GAME OVER!");
-    isGameOver = true;    
+    is_game_over = true;    
   }
   leds[counter] = CRGB::Brown;
   FastLED.show();
@@ -79,36 +83,45 @@ void loop() {
 }
 
 void reset(){
-  if(isGameOver){
-    counter = 24;
+  if(is_game_over){
     world.reset();
-    isGameOver = false;
+    counter = STARTING_BIRD_POSITION;
+    timer2_interval = DEFAULT_WORLD_SPEED;
+    is_game_over = false;
     score = 0;
   }
 }
 
 void flyUp(){
-  reverse = (digitalRead(IN_PIN) == HIGH);
+  bool old_do_fly_up = do_fly_up;
+  do_fly_up = (digitalRead(IN_PIN) == HIGH);
+  if((old_do_fly_up == false) && (do_fly_up == true)){
+    prevent_falling = true;
+  }
 }
 
 void flap(){
-  if(isGameOver){
+  if(is_game_over){
     return;
   }
   leds[counter]=CRGB::Black;
 
   // Vogelposition erhöht bzw. verkleinert sich
-  if(reverse){
-    counter--;
-  } else{
-    counter++;
+  if(prevent_falling == true){
+    prevent_falling = false;
+  }else{
+    if(do_fly_up){
+      counter--;
+    } else{
+      counter++;
+    }
   }
   
   // Vogel bleibt in der zweiten Spalte
-  if(counter < 16){
-    counter = 16;
-  } else if(counter >= 31){
-    counter = 31;
+  if(counter < MIN_BIRD_POSITION){
+    counter = MIN_BIRD_POSITION;
+  } else if(counter >= MAX_BIRD_POSITION){
+    counter = MAX_BIRD_POSITION;
   }
 }
 
@@ -122,7 +135,7 @@ void shift(){
     }
   }
   
-  if(!isGameOver){
+  if(!is_game_over){
     world.shift();
   }
 }
