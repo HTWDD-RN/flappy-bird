@@ -121,11 +121,10 @@ void shift(){
       timer2_interval -= 100;
     }
   }
-  Serial.println("Shifting");
+  
   if(!isGameOver){
     world.shift();
   }
-
 }
 
 
