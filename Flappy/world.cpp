@@ -49,7 +49,7 @@ void World::print(CRGB *leds) const {
   }
 }
 
-void World::reset(){
+void World::reset() {
   state = 0;
   for (int i = 0; i < 16; i++) {
     for (int j = 0; j < 16; j++) {
