@@ -8,7 +8,7 @@
 
 #define LED_PIN 11
 #define START_PIN 2 // Reset Button
-#define IN_PIN 3    // Vogel
+#define IN_PIN 3    // Vogel Button
 #define NUM_LEDS 256
 #define BRIGHTNESS 50
 #define LED_TYPE WS2812B
@@ -17,22 +17,21 @@
 #define MIN_BIRD_POSITION 16
 #define MAX_BIRD_POSITION 31
 #define STARTING_BIRD_POSITION 24
-#define DEFAULT_WORLD_SPEED 1000
+#define DEFAULT_WORLD_SPEED 1000 // Timer: 1s
 #define WORLD_GAP 5
 #define WORLD_DISTANCE 4
 
 CRGB leds[NUM_LEDS];
-volatile int counter = 24; // Anfangsposition des Vogels
-volatile bool is_game_over = true;
-volatile int score;
-volatile int world_timer_interval = DEFAULT_WORLD_SPEED;
 const int rs = 8, en = 9, d4 = 4, d5 = 5, d6 = 6, d7 = 7;
-static unsigned long previousMillis;
-
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 Bounce2::Button button = Bounce2::Button();
 World world(WORLD_GAP, WORLD_DISTANCE);
 Bird bird(MIN_BIRD_POSITION, MAX_BIRD_POSITION, STARTING_BIRD_POSITION);
+
+static unsigned long previousMillis = 0;
+volatile int score = 0;
+volatile int world_timer_interval = DEFAULT_WORLD_SPEED;
+volatile bool is_game_over = true;
 
 void setup() {
   pinMode(LED_PIN, OUTPUT);

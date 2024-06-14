@@ -24,9 +24,9 @@ public:
   void reset();
   void flyUp(bool button_pressed);
   void flap();
-  int getPosition() { return this->position; }
-  void print(CRGB *leds) { leds[this->position] = CRGB::Brown; }
-  void hide(CRGB *leds) { leds[this->position] = CRGB::Black; }
+  int getPosition() const { return this->position; }
+  void print(CRGB *leds) const { leds[this->position] = CRGB::Brown; }
+  void hide(CRGB *leds) const { leds[this->position] = CRGB::Black; }
 };
 
 #endif // BIRD_HPP
