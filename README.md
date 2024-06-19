@@ -11,7 +11,7 @@ HTW Dresden
 
 ## Spielablauf
 
-Das Spiel beginnt, wenn man den Reset-Button drückt. Dann fängt der Vogel in der Mitte seiner Spalte an zu fliegen und es erscheinen langsam die Balken, durch die man den Vogel steuern muss.
+Das Spiel beginnt, wenn man den Reset-Button drückt ([siehe Hardware für den Aufbau](#hardware)). Dann fängt der Vogel in der Mitte seiner Spalte an zu fliegen und es erscheinen langsam die Balken, durch die man den Vogel steuern muss.
 
 Man kann den Vogel steuern, indem man den Button 1 drückt bzw. gedrückt hält. Wenn man den Button 1 drückt, fliegt der Vogel linear nach oben und wenn der Button 1 nicht gedrückt ist, fliegt der Vogel linear nach unten (Schwerkraft).
 
