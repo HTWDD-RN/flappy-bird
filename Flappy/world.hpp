@@ -17,7 +17,7 @@ public:
       }
     }
   }
-  ~World();
+  ~World(){}
   void shift();
   void print(CRGB *leds) const;
   void reset();

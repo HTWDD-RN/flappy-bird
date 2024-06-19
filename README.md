@@ -204,7 +204,9 @@ volatile bool is_game_over = true;
 ```
 
 Nach dieser Anfangskonfiguration folgt die `setup()`-Funktion, in der zuerst die benötigten Pins für die Buttons, die LED-Matrix und das LCD-Display initialisiert werden. Danach wird ein Timer angelegt, der den Takt des Vogels setzt und die Funktion `flyUp` aufruft.
-Des Weiteren gab es ursprünglich einen zweiten Timer aus der Bibliothek [arduino-timer](https://github.com/contrem/arduino-timer), der den Takt der Welt setzt. Dieser Timer wurde jedoch entfernt, da er oftmals grundlos stoppte. Als Alternative verwenden wir nun die Funktion `millis()` und fragen in jedem Schleifendurchlauf ab, ob genug Zeit vergangen ist, um die Welt eine Spalte weiter zu schieben. Die Buttons werden nicht in der Hauptschleife abgefragt, sondern es wird mittels Interrupts auf Änderungen reagiert.
+Des Weiteren gab es ursprünglich einen zweiten Timer aus der Bibliothek [arduino-timer](https://github.com/contrem/arduino-timer), der den Takt der Welt setzt. Dieser Timer wurde jedoch entfernt, da er oftmals grundlos stoppte.
+Als Alternative verwenden wir nun die Funktion `millis()` und fragen in jedem Schleifendurchlauf ab, ob genug Zeit vergangen ist, um die Welt eine Spalte weiter zu schieben. Die Buttons werden nicht in der Hauptschleife abgefragt, sondern es wird mittels Interrupts auf Änderungen reagiert. Der Interrupt für den Fliegen-Button wird im Modus `CHANGE`verwendet, um sowohl auf das Drücken als auch auf das Loslassen zu reagieren. 
+
 
 ```cpp
 void setup(){
@@ -226,10 +228,6 @@ void setup(){
 
 ```cpp
 void loop() {
-  if (is_game_over) {
-    return;
-  }
-
   // Button entprellen
   button.update();
 
@@ -238,13 +236,12 @@ void loop() {
   lcd.print("SCORE: ");
   lcd.print(score);
 
-  if (millis() - previousMillis > world_timer_interval) {
+  if (!is_game_over && millis() - previousMillis > world_timer_interval) {
     previousMillis = millis();
     shift_world();
   }
 
   world.print(leds);
-  bird.print(leds);
 
   // Game over wenn der Vogel die Balken berührt
   if (leds[bird.getPosition()] != CRGB::Black) {
@@ -253,6 +250,7 @@ void loop() {
     is_game_over = true;
   }
 
+  bird.print(leds);
   FastLED.show();
   delay(10);
 }
@@ -292,7 +290,3 @@ Folgende Aspekte des Projekts kann man weiterentwickeln/verbessern:
     - Lücke in den Balken verringern: Man könnte die Lücke in den Balken mit fortlaufender Spielzeit verringern, damit es anspruchsvoller wird, das Spiel zu spielen.
     - Abstand zwischen den Balken verringern: Man könnte den Abstand zwischen den Balken mit fortlaufender Spielzeit verringern.
     - Abstand zwischen den Lücken aufeinanderfolgender Balken vergrößern: Je größer der Abstand zwischen den Lücken zweier Balken ist, desto schwieriger wird es sie rechtzeitig zu überwinden.
-
-```
-
-```

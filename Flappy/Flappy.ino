@@ -57,10 +57,6 @@ void setup() {
 }
 
 void loop() {
-  if (is_game_over) {
-    return;
-  }
-
   // Button entprellen
   button.update();
 
@@ -69,13 +65,12 @@ void loop() {
   lcd.print("SCORE: ");
   lcd.print(score);
 
-  if (millis() - previousMillis > world_timer_interval) {
+  if (!is_game_over && millis() - previousMillis > world_timer_interval) {
     previousMillis = millis();
     shift_world();
   }
 
   world.print(leds);
-  bird.print(leds);
 
   // Game over wenn der Vogel die Balken berührt
   if (leds[bird.getPosition()] != CRGB::Black) {
@@ -84,6 +79,7 @@ void loop() {
     is_game_over = true;
   }
 
+  bird.print(leds);
   FastLED.show();
   delay(10);
 }
