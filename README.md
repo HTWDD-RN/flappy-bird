@@ -4,12 +4,14 @@
 
 Wir haben im Rahmen des Moduls "Programmierung von Microcontrollern" (I-223) bei Prof. Dr.-Ing. Jörg Vogt ein Programm für den Microcontoller "Arduino Uno Rev3" geschrieben, mit dem man eine abgewandelte Version des Spiels "Flappy Bird" von Dong Nguyen spielen kann.
 
+![IMG_1553](https://github.com/niklashempel/mc-beleg-flappy-bird/assets/66086679/57a0b7c6-9f20-4af7-8c4f-009767d7ed83)
+
 _Autoren:_ Lotte Richter (lotte.richter@stud.htw-dresden.de) & Niklas Hempel (niklas.hempel@stud.htw-dresden.de)
 HTW Dresden
 
 ## Spielablauf
 
-Das Spiel beginnt, wenn man Button 2 drückt. Dann fängt der Vogel in der Mitte seiner Spalte an zu fliegen und es erscheinen langsam die Balken, durch die man den Vogel steuern muss.
+Das Spiel beginnt, wenn man den Reset-Button drückt. Dann fängt der Vogel in der Mitte seiner Spalte an zu fliegen und es erscheinen langsam die Balken, durch die man den Vogel steuern muss.
 
 Man kann den Vogel steuern, indem man den Button 1 drückt bzw. gedrückt hält. Wenn man den Button 1 drückt, fliegt der Vogel linear nach oben und wenn der Button 1 nicht gedrückt ist, fliegt der Vogel linear nach unten (Schwerkraft).
 
@@ -19,7 +21,7 @@ Mit fortschreitender Zeit des Spieles wird die Geschwindigkeit mit der sich die 
 
 Das Spiel ist vorbei, wenn der Vogel gegen eine Balken fliegt. Dann wird die Animation auf dem LED-Feld gestoppt und auf dem LCD-Display wird der Score angezeigt.
 
-Wenn man Button 2 drückt, wird das Spiel erneut gestartet.
+Wenn man den Reset-Button drückt, wird das Spiel erneut gestartet.
 
 ## Installation
 
@@ -38,7 +40,8 @@ Zum Übertragen des Sketches auf den Arduino muss der Upload-Button in der Ardui
 - 16x16 Neopixel Matrix WS2812B
 - 3 x Taster
 
-In folgendem Bild wird der Aufbau unseres Microcontrollers dargestellt. Wir nutzen das 16x16 Matrix-LED-Fels WS2812B um das Spiel anzuzeigen, also der Vogel und die Balken durch die er durch muss werden darauf abgebildet. Das LCD-Display nutzen wir, um den jeweiligen Spielstand anzuzeigen und von den Tastern nutzen wir nur die zwei äußersten Buttons (Button 1 & Button 2).
+In folgendem Bild wird der Aufbau unseres Microcontrollers dargestellt. Wir nutzen das 16x16 Matrix-LED-Fels WS2812B um das Spiel anzuzeigen, also der Vogel und die Balken durch die er durch muss werden darauf abgebildet. Das LCD-Display nutzen wir, um den jeweiligen Spielstand anzuzeigen und von den Tastern nutzen wir nur die zwei äußersten Buttons (Button 1 & Reset-Button).
+![Aufbau](https://github.com/niklashempel/mc-beleg-flappy-bird/assets/66086679/fab7f32d-a848-4aef-b3d4-401e35d825b4)
 
 ## Programmierung
 
