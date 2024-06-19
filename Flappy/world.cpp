@@ -4,25 +4,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-void shift_left(int a[], size_t n) {
-  if (n--) {
-    memmove(a, a + 1, n * sizeof(*a));
-    a[n] = 0;
-  }
-}
-
-World::~World() {}
-
 void World::shift() {
   memmove(this->world, this->world + 1,
           sizeof(this->world) - sizeof(this->world[0]));
   memset(this->world + 16 - 1, 0, sizeof(*this->world));
-  state = (state + 1) % distance;
+  this->state = (this->state + 1) % distance;
   int next_row[16];
-  if (state == 0) {
-    int start = rand() % (16 - gap);
+  if (this->state == 0) {
+    int start = rand() % (16 - this->gap);
     for (int i = 0; i < 16; i++) {
-      if (i <= start || i > start + gap) {
+      if (i <= start || i > start + this->gap) {
         this->world[15][i] = 1;
       } else {
         this->world[15][i] = 0;
@@ -49,8 +40,8 @@ void World::print(CRGB *leds) const {
   }
 }
 
-void World::reset(){
-  state = 0;
+void World::reset() {
+  this->state = 0;
   for (int i = 0; i < 16; i++) {
     for (int j = 0; j < 16; j++) {
       this->world[i][j] = 0;
