@@ -1,4 +1,4 @@
-# Beleg Mikrocontroller Flappy Birds
+# Beleg Mikrocontroller Flappy Bird
 
 ## Überblick
 
